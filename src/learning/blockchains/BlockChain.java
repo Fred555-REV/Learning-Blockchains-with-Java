@@ -20,6 +20,7 @@ public class BlockChain {
     }
 
     public void addBlock(Block newBlock) {
+        System.out.println(isChainValid());
         newBlock.setPreviousHash(getLatestBlock().getHash());
         newBlock.setHash(newBlock.calculateHash());
         chain.add(newBlock);
@@ -37,8 +38,8 @@ public class BlockChain {
                     System.out.println("Chain Invalid, removing tampered block");
                 }
             }
-            if (output = false) {
-                for (int i = 0; i < chain.size(); i++) {
+            if (!output) {
+                for (int i = 1; i < chain.size(); i++) {
                     Block currentBlock = chain.get(i);
                     Block previousBlock = chain.get(i - 1);
                     currentBlock.setPreviousHash(previousBlock.getHash());
@@ -51,22 +52,8 @@ public class BlockChain {
         return output;
     }
 
-    public void getAll() {
-
-    }
-
     @Override
     public String toString() {
-//        String string = "BlockChain{" +
-//                "chain=" + chain +
-//                '}';
-        StringBuilder chainDisplay = new StringBuilder();
-//        chainDisplay.append("BlockChain{\n");
-        chainDisplay.append("chain").append(chain);
-//        chainDisplay.append("\n\t}");
-//        for (Block block : chain) {
-//            chainDisplay.append(block).append("\n");
-//        }
-        return chainDisplay.toString();
+        return "chain" + chain;
     }
 }
