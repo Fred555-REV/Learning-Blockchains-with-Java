@@ -28,13 +28,29 @@ public class Block {
         hash = calculateHash();
     }
 
-    private String calculateHash() {
+    public String calculateHash() {
         try {
             return SHA3_256((index + previousHash + timeStamp + data));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String getPreviousHash() {
+        return previousHash;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setPreviousHash(String previousHash) {
+        this.previousHash = previousHash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     private String SHA3_256(final String originalString) throws NoSuchAlgorithmException {
@@ -71,4 +87,14 @@ public class Block {
 //        return bytesToHex(hashbytes);
 //    }
 
+    @Override
+    public String toString() {
+        return "\n\tBlock{" +
+                "\n\t\tindex=" + index +
+                ",\n\t\ttimeStamp=" + timeStamp +
+                ",\n\t\tdata='" + data + '\'' +
+                ",\n\t\tpreviousHash='" + previousHash + '\'' +
+                ",\n\t\thash='" + hash + '\'' +
+                "\n\t}\n";
+    }
 }
