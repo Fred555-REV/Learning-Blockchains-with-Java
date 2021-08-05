@@ -3,18 +3,20 @@ package learning.blockchains;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Block {
     private final int index;
-    private final LocalDate timeStamp;
+    private final Date timeStamp;
     private final String data;
     private String previousHash;
     private String hash;
 
     public Block(int index, String data) {
         this.index = index;
-        timeStamp = LocalDate.now();
+        timeStamp = Date.from(Instant.now());
         this.data = data;
         hash = calculateHash();
     }
@@ -22,7 +24,7 @@ public class Block {
     public Block(int index, String data,
                  String previousHash) {
         this.index = index;
-        timeStamp = LocalDate.now();
+        timeStamp = Date.from(Instant.now());
         this.data = data;
         this.previousHash = previousHash;
         hash = calculateHash();
