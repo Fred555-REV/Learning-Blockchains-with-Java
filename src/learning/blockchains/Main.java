@@ -11,8 +11,6 @@ public class Main {
         chain.addBlock(new Block(2, "{amount 10}"));
 
         System.out.println(chain);
-        chain.getLatestBlock().setHash("chicken");
-        System.out.println(chain);
 
         chain.addBlock(new Block(3, "{amount 15}"));
         System.out.println(chain);

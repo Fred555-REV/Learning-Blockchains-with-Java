@@ -9,12 +9,13 @@ public class BlockChain {
 
     public BlockChain(int difficulty) {
         this.chain = new ArrayList<>();
-        this.chain.add(getGenesisBlock());
         this.difficulty = difficulty;
+        this.chain.add(getGenesisBlock());
     }
 
-    public Block getGenesisBlock() {
+    private Block getGenesisBlock() {
         Block genesisBlock = new Block(0, "", "0");
+        genesisBlock.mineBlock(difficulty);
         return genesisBlock;
     }
 
@@ -42,12 +43,12 @@ public class BlockChain {
                 }
             }
             if (!output) {
-                for (int i = 1; i < chain.size(); i++) {
-                    Block currentBlock = chain.get(i);
-                    Block previousBlock = chain.get(i - 1);
-                    currentBlock.setPreviousHash(previousBlock.getHash());
-                    currentBlock.setHash(currentBlock.calculateHash());
-                }
+//                for (int i = 1; i < chain.size(); i++) {
+//                    Block currentBlock = chain.get(i);
+//                    Block previousBlock = chain.get(i - 1);
+//                    currentBlock.setPreviousHash(previousBlock.getHash());
+//                    currentBlock.setHash(currentBlock.calculateHash());
+//                }
             } else {
                 System.out.println("Chain Valid");
             }

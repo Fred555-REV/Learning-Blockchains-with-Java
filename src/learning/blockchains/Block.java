@@ -48,7 +48,7 @@ public class Block {
     public void mineBlock(int difficulty) {
         while (!hash.substring(0, difficulty).equals("0".repeat(difficulty))) {
             this.nonce++;
-            hash = calculateHash();
+            this.hash = calculateHash();
         }
         System.out.println("Block mined: " + hash);
     }
@@ -65,9 +65,9 @@ public class Block {
         this.previousHash = previousHash;
     }
 
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
+//    public void setHash(String hash) {
+//        this.hash = hash;
+//    }
 
     private String SHA3_256(final String originalString) throws NoSuchAlgorithmException {
         final MessageDigest digest = MessageDigest.getInstance("SHA3-256");
