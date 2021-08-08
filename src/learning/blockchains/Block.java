@@ -5,7 +5,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class Block {
     private final int index;
@@ -13,12 +16,14 @@ public class Block {
     private final String data;
     private String previousHash;
     private String hash;
+    private int nonce;
 
     public Block(int index, String data) {
         this.index = index;
         timeStamp = Date.from(Instant.now());
         this.data = data;
         hash = calculateHash();
+        nonce = 0;
     }
 
     public Block(int index, String data,
@@ -28,15 +33,24 @@ public class Block {
         this.data = data;
         this.previousHash = previousHash;
         hash = calculateHash();
+        nonce = 0;
     }
 
     public String calculateHash() {
         try {
-            return SHA3_256((index + previousHash + timeStamp + data));
+            return SHA3_256((index + previousHash + timeStamp + data + nonce));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void mineBlock(int difficulty) {
+        while (!hash.substring(0, difficulty).equals("0".repeat(difficulty))) {
+            this.nonce++;
+            hash = calculateHash();
+        }
+        System.out.println("Block mined: " + hash);
     }
 
     public String getPreviousHash() {

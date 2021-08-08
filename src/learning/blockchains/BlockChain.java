@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockChain {
-    private List<Block> chain = new ArrayList<>();
+    private List<Block> chain;
+    private final int difficulty;
 
-    public BlockChain() {
+    public BlockChain(int difficulty) {
+        this.chain = new ArrayList<>();
         this.chain.add(getGenesisBlock());
+        this.difficulty = difficulty;
     }
 
     public Block getGenesisBlock() {
@@ -22,7 +25,7 @@ public class BlockChain {
     public void addBlock(Block newBlock) {
         System.out.println(isChainValid());
         newBlock.setPreviousHash(getLatestBlock().getHash());
-        newBlock.setHash(newBlock.calculateHash());
+        newBlock.mineBlock(difficulty);
         chain.add(newBlock);
     }
 

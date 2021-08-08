@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
         // write your code here
-        BlockChain chain = new BlockChain();
+        BlockChain chain = new BlockChain(4);
 //        System.out.println(chain.getLatestBlock());
         System.out.println(chain);
         chain.addBlock(new Block(1, "{amount 4}"));
