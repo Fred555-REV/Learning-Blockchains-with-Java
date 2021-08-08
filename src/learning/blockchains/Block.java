@@ -4,33 +4,37 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Block {
-    private final int index;
+    //    private final int index;
     private final Date timeStamp;
-    private final String data;
+    //    private final String data;
+    public List<Transaction> transactions;
     private String previousHash;
     private String hash;
     private int nonce;
 
-    public Block(int index, String data) {
-        this.index = index;
+    public Block() {
         timeStamp = Date.from(Instant.now());
-        this.data = data;
+        this.transactions = new ArrayList<>();
         hash = calculateHash();
         nonce = 0;
     }
 
-    public Block(int index, String data,
-                 String previousHash) {
-        this.index = index;
+    public Block(List<Transaction> pendingTransactions) {
         timeStamp = Date.from(Instant.now());
-        this.data = data;
+        this.transactions = new ArrayList<>();
+        hash = calculateHash();
+        nonce = 0;
+        this.transactions = pendingTransactions;
+    }
+
+    public Block(String previousHash) {
+        timeStamp = Date.from(Instant.now());
+        this.transactions = new ArrayList<>();
         this.previousHash = previousHash;
         hash = calculateHash();
         nonce = 0;
@@ -38,7 +42,7 @@ public class Block {
 
     public String calculateHash() {
         try {
-            return SHA3_256((index + previousHash + timeStamp + data + nonce));
+            return SHA3_256((previousHash + timeStamp + transactions + nonce));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -106,9 +110,8 @@ public class Block {
     @Override
     public String toString() {
         return "\n\tBlock{" +
-                "\n\t\tindex=" + index +
-                ",\n\t\ttimeStamp=" + timeStamp +
-                ",\n\t\tdata='" + data + '\'' +
+                "\n\t\ttimeStamp=" + timeStamp +
+                ",\n\t\ttransactions='" + transactions + '\'' +
                 ",\n\t\tpreviousHash='" + previousHash + '\'' +
                 ",\n\t\thash='" + hash + '\'' +
                 "\n\t}\n";
